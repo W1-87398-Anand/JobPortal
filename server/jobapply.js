@@ -9,8 +9,8 @@ const connectionString =
 {
     host: "localhost",
     port: 3306,
-    database: "jobportaldb",
-    user: "W1_87293_YASH",
+    database: "JobPortal",
+    user: "w1_87398_Anand",
     password: "manager"
 };
 
@@ -64,7 +64,7 @@ app.post("/", async (request, response) => {
                 else resolve(result);
             });
         });
- 
+
         // Fetch seeker email
         const seekerEmailQuery = `select email, fname FROM jobseeker where seeker_id = ${seeker_id}`;
         console.log(seekerEmailQuery);
@@ -106,6 +106,8 @@ app.post("/", async (request, response) => {
 
 
 app.get("/", (request, response) => {
+    const { seeker_id } = request.query
+    console.log(seeker_id)
     const queryText = `
         SELECT 
             job_application.job_id, 
@@ -126,6 +128,7 @@ app.get("/", (request, response) => {
             jobseeker 
         ON 
             job_application.seeker_id = jobseeker.seeker_id
+        where jobseeker.seeker_id = ${seeker_id}
     `;
 
     const connection = mysql.createConnection(connectionString);
@@ -143,54 +146,6 @@ app.get("/", (request, response) => {
         }
         connection.end();
         response.end();
-    });
-});
-
-
-app.get("/applied-jobs/:seekerId", (req, res) => {
-    const seekerId = req.params.seekerId;
-
-    if (!seekerId) {
-        return res.status(400).json({ error: "Missing seekerId parameter" });
-    }
-
-    const queryText = `
-        SELECT 
-            job_application.job_id, 
-            jobs.job_title, 
-            jobseeker.fname, 
-            jobseeker.lname, 
-            jobseeker.email, 
-            jobseeker.contactme, 
-            jobseeker.resume_path, 
-            job_application.applied_at
-        FROM 
-            job_application 
-        INNER JOIN 
-            jobs  
-        ON 
-            jobs.job_id = job_application.job_id 
-        INNER JOIN 
-            jobseeker 
-        ON 
-            job_application.seeker_id = jobseeker.seeker_id
-        WHERE 
-            jobseeker.seeker_id = ?;
-    `;
-
-    const connection = mysql.createConnection(connectionConfig);
-    connection.connect();
-    connection.query(queryText, [seekerId], (err, result) => {
-        if (err) {
-            console.error("Error fetching applied jobs:", err);
-            return res.status(500).json({ error: "Database error" });
-        }
-
-        if (result.length === 0) {
-            return res.status(404).json({ message: "No applied jobs found" });
-        }
-
-        res.status(200).json(result);
     });
 });
 

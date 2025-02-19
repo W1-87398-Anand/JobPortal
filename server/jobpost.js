@@ -10,8 +10,8 @@ const connectionString =
 {
     host: "localhost",
     port: 3306,
-    database: "jobportaldb",
-    user: "W1_87293_YASH",
+    database: "JobPortal",
+    user: "w1_87398_Anand",
     password: "manager"
 };
 
