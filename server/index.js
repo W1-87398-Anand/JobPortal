@@ -7,9 +7,8 @@ const routeTojobs=require('./jobpost');
 const routeTojobseeker=require('./jobseeker');
 const routeTojobapply= require("./jobapply");
 
-//const routeToAdmin=require('./routes/jobprovider');
-const routeToProvider=require('./jobprovider');
-const routeToAdmin=require('./admin');
+// const routeToAdmin=require('./routes/jobprovider');
+const routeToAdmin=require('./jobprovider');
 
 
 const secretkey="sunbeaminfo.com";
@@ -46,9 +45,9 @@ app.use(express.json());
 app.use("/jobpost",routeTojobs);
 app.use("/jobseeker",routeTojobseeker);
 app.use("/jobapply",routeTojobapply);
-app.use("/jobprovider",routeToProvider);
 
-//app.use("/admin",routeToAdmin)
+app.use("/jobprovider",routeToAdmin);
+
 app.listen(9999,()=>{
     console.log("Server is started ....");
 })

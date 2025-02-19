@@ -11,8 +11,8 @@ const connectionString =
 {
     host: "localhost",
     port: 3306,
-    database: "jobportaldb",
-    user: "W1_87293_YASH",
+    database: "JobPortal",
+    user: "w1_87398_Anand",
     password: "manager"
 };
 
@@ -172,6 +172,7 @@ app.post('/signin', (request, response) => {
     
     const connection = mysql2.createConnection(connectionString);
     connection.connect();
+    console.log("connection established")
     connection.query(queryText, (err, result) => {
         if (err) {
             console.error(err);

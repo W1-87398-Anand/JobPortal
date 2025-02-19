@@ -1,9 +1,9 @@
 const express = require('express');
 var app = express.Router();
- 
+const mysql2 = require('mysql2');
 const jwt = require('jsonwebtoken')
 
-const mysql2=require('mysql2')
+
 const secretkey = "sunbeaminfo.com";
 
 
@@ -11,8 +11,8 @@ const connectionString =
 {
     host: "localhost",
     port: 3306,
-    database: "jobportaldb",
-    user: "W1_87293_YASH",
+    database: "JobPortal",
+    user: "w1_87398_Anand",
     password: "manager"
 };
 
